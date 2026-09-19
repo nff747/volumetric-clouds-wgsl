@@ -1,0 +1,38 @@
+{
+  "name": "volumetric-clouds-wgsl",
+  "version": "1.0.0",
+  "description": "Real-Time WebGPU Volumetric Cloud & Atmospheric Raymarching Engine in WGSL",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "benchmark": "npx tsx scripts/benchmark.ts"
+  },
+  "keywords": [
+    "webgpu",
+    "wgsl",
+    "volumetric-clouds",
+    "raymarching",
+    "atmospheric-scattering",
+    "worley-noise",
+    "perlin-noise",
+    "beer-lambert",
+    "phase-function",
+    "crepuscular-rays",
+    "threejs",
+    "compute-shaders"
+  ],
+  "author": "nff747 <nff747@users.noreply.github.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  },
+  "peerDependencies": {
+    "@webgpu/types": "^0.1.40"
+  }
+}
