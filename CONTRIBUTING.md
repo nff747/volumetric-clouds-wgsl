@@ -1,23 +1,7 @@
-# Contributing to Volumetric Clouds WGSL
+# 🌱 Welcome! We're so glad you're here.
 
-Thank you for your interest in contributing!
+Thank you so much for your interest in contributing! We believe that open source should be a deeply rewarding, mentally pleasing, and joyful experience. 
 
-## Development Guidelines
+Whether you are fixing a typo, optimizing a complex WebGPU shader, or completely rewriting an API to be more intuitive, your work is valued here. Our goal is to create software that feels effortless to use and maintain. 
 
-1. **Clean WGSL Kernels**: Keep compute shaders modular, well-commented, and aligned with standard W3C WebGPU specifications.
-2. **Deterministic Optics**: Phase functions and scattering routines should match Mie / Henyey-Greenstein analytical models.
-3. **Tests & Coverage**: All mathematical functions and coordinate routines must include Vitest unit tests under `tests/`.
-4. **Zero-Overhead Memory**: Buffer uploads should minimize staging copies and leverage compact structs for uniform buffers.
-
-## Running Tests
-
-```bash
-npm install
-npm test
-```
-
-## Running the Demo
-
-```bash
-npm run dev
-```
+We welcome everyone with open arms (provided there are no ill intentions). Dive in, have fun, and let's build something beautiful together!
