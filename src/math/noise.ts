@@ -40,7 +40,7 @@ export class CloudNoise {
           const dx = i + rx - fx;
           const dy = j + ry - fy;
           const dz = k + rz - fz;
-          const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+          const dist = Math.sqrt(dx * dx + dy * dy + dz * dy);
           if (dist < minDist) {
             minDist = dist;
           }
@@ -70,6 +70,43 @@ export class CloudNoise {
     }
 
     return sum / totalAmp;
+  }
+
+  /**
+   * 3D Worley F2 - F1 cellular boundary noise.
+   * Produces crystalline edge erosion textures for cloud boundary curling.
+   */
+  public static worleyEdgeErosion(x: number, y: number, z: number): number {
+    const ix = Math.floor(x);
+    const iy = Math.floor(y);
+    const iz = Math.floor(z);
+
+    const fx = x - ix;
+    const fy = y - iy;
+    const fz = z - iz;
+
+    let f1 = 1.0;
+    let f2 = 1.0;
+
+    for (let k = -1; k <= 1; k++) {
+      for (let j = -1; j <= 1; j++) {
+        for (let i = -1; i <= 1; i++) {
+          const [rx, ry, rz] = this.hash33(ix + i, iy + j, iz + k);
+          const dx = i + rx - fx;
+          const dy = j + ry - fy;
+          const dz = k + rz - fz;
+          const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+          if (dist < f1) {
+            f2 = f1;
+            f1 = dist;
+          } else if (dist < f2) {
+            f2 = dist;
+          }
+        }
+      }
+    }
+
+    return Math.max(0.0, Math.min(1.0, f2 - f1));
   }
 
   /**
