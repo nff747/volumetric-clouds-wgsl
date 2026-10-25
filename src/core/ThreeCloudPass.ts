@@ -153,4 +153,30 @@ export class ThreeCloudPass {
       }
     };
   }
+
+  /**
+   * Packs volumetric pass uniforms into a 16-byte aligned Float32Array
+   * suitable for WebGPU uniform buffer dispatch.
+   */
+  public packPassUniforms(time: number = 0.0): Float32Array {
+    // 16 floats (64 bytes = multiple of 16)
+    const buf = new Float32Array(16);
+    buf[0] = time;
+    buf[1] = this.config.coverage;
+    buf[2] = this.config.densityMultiplier;
+    buf[3] = this.config.cloudBottom;
+    buf[4] = this.config.cloudTop;
+    buf[5] = this.config.sunDirection[0];
+    buf[6] = this.config.sunDirection[1];
+    buf[7] = this.config.sunDirection[2];
+    buf[8] = this.config.sunColor[0];
+    buf[9] = this.config.sunColor[1];
+    buf[10] = this.config.sunColor[2];
+    buf[11] = this.config.ambientColor[0];
+    buf[12] = this.config.ambientColor[1];
+    buf[13] = this.config.ambientColor[2];
+    buf[14] = this.config.primarySteps;
+    buf[15] = this.config.lightSteps;
+    return buf;
+  }
 }
