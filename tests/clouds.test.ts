@@ -4,6 +4,7 @@ import {
   CloudNoise,
   CloudRenderer,
   CPUReferenceClouds,
+  ThreeCloudPass,
   DEFAULT_CLOUD_CONFIG,
   cloudMarchShader,
 } from '../src/index';
@@ -119,9 +120,7 @@ describe('AtmosphericOptics Rayleigh Phase Mechanics', () => {
 
     expect(fwd).toBeCloseTo(bwd, 5);
     expect(fwd).toBeGreaterThan(side);
-    // At cosTheta = 0: 3 / (16 * PI) approx 0.05968
     expect(side).toBeCloseTo(3.0 / (16.0 * Math.PI), 5);
-    // At cosTheta = 1: 6 / (16 * PI) = 2 * side
     expect(fwd).toBeCloseTo(2.0 * side, 5);
   });
 });
@@ -137,5 +136,25 @@ describe('Worley Edge Erosion F2 - F1 Mechanics', () => {
         }
       }
     }
+  });
+});
+
+describe('ThreeCloudPass Uniform Packing', () => {
+  it('should pack 64-byte aligned uniform buffer parameters', () => {
+    const pass = new ThreeCloudPass({
+      coverage: 0.65,
+      densityMultiplier: 1.2,
+      cloudBottom: 1600,
+      cloudTop: 4200,
+    });
+
+    const packed = pass.packPassUniforms(4.5);
+    expect(packed.length).toBe(16);
+    expect(packed.byteLength).toBe(64);
+    expect(packed[0]).toBe(4.5);
+    expect(packed[1]).toBeCloseTo(0.65, 5);
+    expect(packed[2]).toBeCloseTo(1.2, 5);
+    expect(packed[3]).toBe(1600);
+    expect(packed[4]).toBe(4200);
   });
 });
