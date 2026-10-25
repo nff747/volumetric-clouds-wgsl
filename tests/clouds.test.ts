@@ -110,3 +110,18 @@ describe('WGSL Cloud Marching Compute Shader', () => {
     expect(cloudMarchShader).toContain('outColorTex');
   });
 });
+
+describe('AtmosphericOptics Rayleigh Phase Mechanics', () => {
+  it('should evaluate Rayleigh scattering symmetry at forward and backward angles', () => {
+    const fwd = AtmosphericOptics.rayleighPhase(1.0);
+    const bwd = AtmosphericOptics.rayleighPhase(-1.0);
+    const side = AtmosphericOptics.rayleighPhase(0.0);
+
+    expect(fwd).toBeCloseTo(bwd, 5);
+    expect(fwd).toBeGreaterThan(side);
+    // At cosTheta = 0: 3 / (16 * PI) approx 0.05968
+    expect(side).toBeCloseTo(3.0 / (16.0 * Math.PI), 5);
+    // At cosTheta = 1: 6 / (16 * PI) = 2 * side
+    expect(fwd).toBeCloseTo(2.0 * side, 5);
+  });
+});
