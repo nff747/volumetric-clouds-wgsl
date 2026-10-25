@@ -1,6 +1,7 @@
 /**
  * Atmospheric Optics & Scattering Phase Functions.
- * Implements dual-lobe Henyey-Greenstein Mie scattering and Beer-Lambert extinction with powder-sugar effects.
+ * Implements dual-lobe Henyey-Greenstein Mie scattering, Rayleigh scattering phase,
+ * and Beer-Lambert extinction with powder-sugar effects.
  */
 
 import { AtmosphereParams, DEFAULT_ATMOSPHERE_PARAMS } from '../types';
@@ -27,6 +28,14 @@ export class AtmosphericOptics {
     const forward = this.henyeyGreenstein(cosTheta, params.phaseForwardG);
     const backward = this.henyeyGreenstein(cosTheta, params.phaseBackwardG);
     return params.phaseBlend * forward + (1.0 - params.phaseBlend) * backward;
+  }
+
+  /**
+   * Rayleigh scattering phase function for clean air molecules.
+   * Symmetric forward and backward dipolar scattering: (3 / (16 * PI)) * (1 + cos^2(theta)).
+   */
+  public static rayleighPhase(cosTheta: number): number {
+    return (3.0 / (16.0 * Math.PI)) * (1.0 + cosTheta * cosTheta);
   }
 
   /**
