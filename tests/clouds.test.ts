@@ -125,3 +125,17 @@ describe('AtmosphericOptics Rayleigh Phase Mechanics', () => {
     expect(fwd).toBeCloseTo(2.0 * side, 5);
   });
 });
+
+describe('Worley Edge Erosion F2 - F1 Mechanics', () => {
+  it('should evaluate bounded cellular edge erosion in [0, 1]', () => {
+    for (let x = 0; x < 2; x += 0.5) {
+      for (let y = 0; y < 2; y += 0.5) {
+        for (let z = 0; z < 2; z += 0.5) {
+          const edge = CloudNoise.worleyEdgeErosion(x, y, z);
+          expect(edge).toBeGreaterThanOrEqual(0.0);
+          expect(edge).toBeLessThanOrEqual(1.0);
+        }
+      }
+    }
+  });
+});
