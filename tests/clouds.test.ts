@@ -158,3 +158,19 @@ describe('ThreeCloudPass Uniform Packing', () => {
     expect(packed[4]).toBe(4200);
   });
 });
+
+describe('Optical Thickness Segment Integration', () => {
+  it('should integrate positive non-decreasing thickness through cloud altitudes', () => {
+    const start: [number, number, number] = [0, 1600, 0];
+    const end: [number, number, number] = [0, 3800, 0];
+    const thickness = CPUReferenceClouds.integrateOpticalThickness(start, end, 24, { coverage: 0.7 });
+
+    expect(thickness).toBeGreaterThan(0.0);
+
+    // Segment completely outside cloud layer (e.g. below base)
+    const belowStart: [number, number, number] = [0, 100, 0];
+    const belowEnd: [number, number, number] = [0, 500, 0];
+    const thicknessBelow = CPUReferenceClouds.integrateOpticalThickness(belowStart, belowEnd, 10);
+    expect(thicknessBelow).toBeCloseTo(0.0, 5);
+  });
+});
