@@ -113,4 +113,41 @@ export class CPUReferenceClouds {
       transmittance,
     };
   }
+
+  /**
+   * Estimates cumulative cloud optical thickness along an arbitrary world ray segment.
+   */
+  public static integrateOpticalThickness(
+    start: [number, number, number],
+    end: [number, number, number],
+    samples: number = 16,
+    config?: Partial<CloudConfig>
+  ): number {
+    const dx = end[0] - start[0];
+    const dy = end[1] - start[1];
+    const dz = end[2] - start[2];
+    const totalDist = Math.hypot(dx, dy, dz);
+    if (totalDist <= 1e-4) return 0.0;
+
+    const stepDist = totalDist / samples;
+    let opticalThickness = 0.0;
+
+    for (let i = 0; i < samples; i++) {
+      const frac = (i + 0.5) / samples;
+      const sx = start[0] + dx * frac;
+      const sy = start[1] + dy * frac;
+      const sz = start[2] + dz * frac;
+
+      const density = CloudNoise.sampleCloudDensity(
+        sx, sy, sz,
+        config?.coverage ?? 0.5,
+        config?.cloudBottom ?? 1500.0,
+        config?.cloudTop ?? 4000.0
+      );
+
+      opticalThickness += density * stepDist;
+    }
+
+    return opticalThickness;
+  }
 }
