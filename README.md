@@ -1,5 +1,7 @@
 # ⚡ Volumetric Clouds WGSL
 
+[![Lunar Paradox](https://img.shields.io/badge/Organization-Lunar_Paradox-0a0e1a?style=for-the-badge&logo=probot&logoColor=d7b886)](https://lunarparadox.com)
+
 ![Volumetric Clouds WGSL](assets/banner.jpg)
 
 > **Real-Time WebGPU Volumetric Cloudscapes & Atmospheric Raymarching Engine in WGSL**  
@@ -155,3 +157,7 @@ Apache 2.0 &copy; 2026 [nff747](https://github.com/nff747). Authored with high-p
 ## License
 
 This project is licensed under the [Apache-2.0 License](LICENSE).
+
+---
+
+*A component of the [Lunar Paradox](https://lunarparadox.com) applied systems & graphics laboratory. Engineered by nff747.*
